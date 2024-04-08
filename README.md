@@ -1,0 +1,2 @@
+# gena
+Amazon bedrock test
