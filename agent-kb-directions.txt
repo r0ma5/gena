@@ -1,0 +1,1 @@
+Use this knowledge base for security vulnerabilities evaluation. Give priority to items with latest date or higher CVE number.
