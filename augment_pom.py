@@ -49,20 +49,20 @@ if __name__ == '__main__':
         },
         retrieveAndGenerateConfiguration={
            'type': 'KNOWLEDGE_BASE',
-           'generationConfiguration': {
-                'promptTemplate': {
-                    'textPromptTemplate': prompt
-                }
-            },
-            'retrievalConfiguration': {
-                'vectorSearchConfiguration': {
-                    'numberOfResults': args.numberOfResults
-                }
-            },
             'knowledgeBaseConfiguration': {
                 'knowledgeBaseId': args.kbid,
                 'modelArn': args.modelArn
             }
+#           'generationConfiguration': {
+#                'promptTemplate': {
+#                    'textPromptTemplate': prompt
+#                }
+#            }
+#            'retrievalConfiguration': {
+#                'vectorSearchConfiguration': {
+#                    'numberOfResults': args.numberOfResults
+#                }
+#            },
         }
     )
 
