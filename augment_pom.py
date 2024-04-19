@@ -41,30 +41,34 @@ if __name__ == '__main__':
         except Exception as e:
             logger.error(e)
             raise e
+    for d in pom_dependencies.findall('dependency'):
+        print('---')
+        input = ET.tostring(d).decode('utf-8')
+        print(input)
 
-    response = br_client.retrieve_and_generate(
-        input={
-            'text': str(ET.tostring(pom_dependencies))
-        },
-        retrieveAndGenerateConfiguration={
-           'type': 'KNOWLEDGE_BASE',
-           'knowledgeBaseConfiguration': {
-                'knowledgeBaseId': args.kbid,
-                'modelArn': 'arn:aws:bedrock:us-east-1::foundation-model/{m}'.format(m=args.model),
-                'generationConfiguration': {
-                    'promptTemplate': {
-                     'textPromptTemplate': prompt
-                    }
-                },
-                'retrievalConfiguration': {
-                    'vectorSearchConfiguration': {
-                     'numberOfResults': args.numberOfResults
+        response = br_client.retrieve_and_generate(
+            input={
+                'text': input
+            },
+            retrieveAndGenerateConfiguration={
+               'type': 'KNOWLEDGE_BASE',
+               'knowledgeBaseConfiguration': {
+                    'knowledgeBaseId': args.kbid,
+                    'modelArn': 'arn:aws:bedrock:us-east-1::foundation-model/{m}'.format(m=args.model),
+                    'generationConfiguration': {
+                        'promptTemplate': {
+                         'textPromptTemplate': prompt
+                        }
+                    },
+                    'retrievalConfiguration': {
+                        'vectorSearchConfiguration': {
+                         'numberOfResults': args.numberOfResults
+                        }
                     }
                 }
             }
-        }
-    )
-
-    print(response)
+        )
+    
+        print(response)
 
 
