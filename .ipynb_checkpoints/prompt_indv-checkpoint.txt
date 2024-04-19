@@ -1,0 +1,19 @@
+Human:
+
+Here is java package and version in the format: <dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>:
+$query$
+
+Here are the search results in numbered order:
+$search_results$
+
+Evaluate pair, artifactid and version, from user input against vulnerabilities listed in the search results. Modify provided input according to the following rules:
+- If there is a vulnerability listed for the artifactid and version, find and use a higher version of the artifactid in search results where the vulnerability was fixed.
+- Never downgrade the version provided in maven XML. Example: version 2.14.0-rc1 is higher than 2.13.4.1
+- If higher version of artifactid with fixed vulnerability cannot be determined, use the the following tag <latest>public maven</latest> as version in the output.
+- If there is no vulnerability listed for the artifactid don't change the version.
+- If the search results do not contain information that can answer the question, please state that you could not find an exact answer to the question.
+
+Provide the short answer in maven dependency XML format:
+<dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>
+
+Assistant:
