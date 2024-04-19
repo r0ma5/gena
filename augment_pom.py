@@ -15,7 +15,7 @@ if __name__ == '__main__':
     parser.add_argument('pomfile', default='pom.xml', help='pom file to augment')
     parser.add_argument('--prompt', default='prompt.txt', help='model prompt file')
     parser.add_argument('--kbid', default='2AEDVV6ZHM', help='knowledge base ID from the AWS account')
-    parser.add_argument('--modelArn', default='anthropic.claude-v2:1', help='model to call')
+    parser.add_argument('--model', default='anthropic.claude-v2:1', help='model to call')
     parser.add_argument('--numberOfResults', default=20, type=int, help='model to call')
     args = parser.parse_args()
 
@@ -37,32 +37,31 @@ if __name__ == '__main__':
             if not pom_dependencies:
                 logger.warning('No dependencies found in pom, exiting');
                 exit(1)
-            print(pom_dependencies)
-            print(ET.tostring(pom_dependencies, encoding='utf-8'))
+            print(ET.tostring(pom_dependencies).decode('utf-8'))
         except Exception as e:
             logger.error(e)
             raise e
 
     response = br_client.retrieve_and_generate(
         input={
-            'text': pom_dependencies.text
+            'text': str(ET.tostring(pom_dependencies))
         },
         retrieveAndGenerateConfiguration={
            'type': 'KNOWLEDGE_BASE',
-            'knowledgeBaseConfiguration': {
+           'knowledgeBaseConfiguration': {
                 'knowledgeBaseId': args.kbid,
-                'modelArn': args.modelArn
+                'modelArn': 'arn:aws:bedrock:us-east-1::foundation-model/{m}'.format(m=args.model),
+                'generationConfiguration': {
+                    'promptTemplate': {
+                     'textPromptTemplate': prompt
+                    }
+                },
+                'retrievalConfiguration': {
+                    'vectorSearchConfiguration': {
+                     'numberOfResults': args.numberOfResults
+                    }
+                }
             }
-#           'generationConfiguration': {
-#                'promptTemplate': {
-#                    'textPromptTemplate': prompt
-#                }
-#            }
-#            'retrievalConfiguration': {
-#                'vectorSearchConfiguration': {
-#                    'numberOfResults': args.numberOfResults
-#                }
-#            },
         }
     )
 
