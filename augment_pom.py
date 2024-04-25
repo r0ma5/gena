@@ -6,6 +6,11 @@ import xml.etree.ElementTree as ET
 logger = logging.getLogger()
 
 # arn:aws:iam::088199345311:role/SandboxServiceRole
+# anthropic.claude-v2
+# anthropic.claude-v2:1
+# anthropic.claude-3-sonnet-20240229-v1:0
+# anthropic.claude-3-haiku-20240307-v1:0
+
 
 br_client = boto3.client('bedrock-agent-runtime')
 
@@ -43,9 +48,10 @@ if __name__ == '__main__':
             raise e
     for d in pom_dependencies.findall('dependency'):
         print('---')
-        input = "Evaluate vulnerability for the following dependency:\n {d}\
-replace version with the safer alternative if found.".format(d=ET.tostring(d).decode('utf-8'))
+        ET.indent(d)
+        input = "Evaluate vulnerability for the following dependency:\n{d}\nreplace version with the safer alternative if found.".format(d=ET.tostring(d).decode('utf-8').strip())
         print(input)
+        print('---')
 
         response = br_client.retrieve_and_generate(
             input={

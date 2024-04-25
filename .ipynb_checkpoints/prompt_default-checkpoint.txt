@@ -10,6 +10,6 @@ $query$
 </question>
                 
 If dependency is vulnerable, find safer version and use it in the response formatted as:  
-<dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>
+<dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>. 
 
 Assistant:
