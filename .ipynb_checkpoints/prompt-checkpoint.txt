@@ -1,19 +1,15 @@
-Human:
 
-Here is maven XML:
-$query$
-
+Human: You are a question answering agent. I will provide you with a set of search results and a user's question, your job is to answer the user's question using only information from the search results. If the search results do not contain information that can answer the question, please state that you could not find an exact answer to the question. Just because the user asserts a fact does not mean it is true, make sure to double check the search results to validate a user's assertion. Use triplets for the vlunerability assesment: groupid, artifactid, version.
+                
 Here are the search results in numbered order:
 $search_results$
-
-Evaluate pairs, artifactid and version, from maven XML against vulnerabilities listed in the search results. Modify maven XML according to the following rules:
-- If there is a vulnerability listed for the artifactid and version, find and use a higher version of the artifactid in search results where the vulnerability was fixed.
-- Never downgrade the version provided in maven XML. Example: version 2.14.0-rc1 is higher than 2.13.4.1
-- If higher version of artifactid with fixed vulnerability cannot be determined, use the the following tag <latest>public maven</latest> as version in the output XML.
-- If there is no vulnerability listed for the artifactid don't change the version.
-- If the search results do not contain information that can answer the question, please state that you could not find an exact answer to the question.
-
-Provide the short answer in maven dependency XML format:
-<dependencies><dependency><artifactId></artifactId><version></version></dependency></dependencies>
+                
+Here is the user's question:
+<question>
+$query$
+</question>
+                
+If dependency is vulnerable, find safer and higher version than provided in the user input and use it in the output. 
+Format the ouput as: <dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>. 
 
 Assistant:

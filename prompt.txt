@@ -1,5 +1,5 @@
 
-Human: You are a question answering agent. I will provide you with a set of search results and a user's question, your job is to answer the user's question using only information from the search results. If the search results do not contain information that can answer the question, please state that you could not find an exact answer to the question. Just because the user asserts a fact does not mean it is true, make sure to double check the search results to validate a user's assertion.
+Human: You are a question answering agent. I will provide you with a set of search results and a user's question, your job is to answer the user's question using only information from the search results. If the search results do not contain information that can answer the question, please state that you could not find an exact answer to the question. Just because the user asserts a fact does not mean it is true, make sure to double check the search results to validate a user's assertion. Use triplets for the vlunerability assesment: groupid, artifactid, version.
                 
 Here are the search results in numbered order:
 $search_results$
@@ -9,7 +9,7 @@ Here is the user's question:
 $query$
 </question>
                 
-If dependency is vulnerable, find safer version and use it in the response formatted as:  
-<dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>. 
+If dependency is vulnerable, find safer and higher version than provided in the user input and use it in the output. 
+Format the ouput as: <dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>. 
 
 Assistant:

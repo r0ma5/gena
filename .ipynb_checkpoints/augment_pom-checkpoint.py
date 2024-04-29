@@ -12,6 +12,14 @@ logger = logging.getLogger()
 # anthropic.claude-3-haiku-20240307-v1:0
 
 
+def start_bold(text):
+    return '\033[1m{t}'.format(t=text)
+
+
+def stop_bold(text):
+    return '{t}\033[0m'.format(t=text)
+
+
 br_client = boto3.client('bedrock-agent-runtime')
 
 if __name__ == '__main__':
@@ -21,7 +29,7 @@ if __name__ == '__main__':
     parser.add_argument('--prompt', default='prompt.txt', help='model prompt file')
     parser.add_argument('--kbid', default='QJH6PFQD9K', help='knowledge base ID from the AWS account')
     parser.add_argument('--model', default='anthropic.claude-v2:1', help='model to call')
-    parser.add_argument('--numberOfResults', default=20, type=int, help='number of results from KB')
+    parser.add_argument('--numberOfResults', default=5, type=int, help='number of results from KB')
     args = parser.parse_args()
 
     if args.prompt:
@@ -76,8 +84,8 @@ if __name__ == '__main__':
             }
         )
         print(response.get('output').get('text')
-              .replace('<dependency>', '\033[1m<dependency>')
-              .replace('</dependency>', '</dependency>\033[0m'))
+              .replace('<dependency>', start_bold('<dependency>'))
+              .replace('</dependency>', stop_bold('</dependency>')))
 
 
 
