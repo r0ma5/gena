@@ -19,7 +19,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser('Augment pom.xml with Gen AI')
     parser.add_argument('pomfile', default='pom.xml', help='pom file to augment')
     parser.add_argument('--prompt', default='prompt.txt', help='model prompt file')
-    parser.add_argument('--kbid', default='2AEDVV6ZHM', help='knowledge base ID from the AWS account')
+    parser.add_argument('--kbid', default='QJH6PFQD9K', help='knowledge base ID from the AWS account')
     parser.add_argument('--model', default='anthropic.claude-v2:1', help='model to call')
     parser.add_argument('--numberOfResults', default=20, type=int, help='number of results from KB')
     args = parser.parse_args()
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     for d in pom_dependencies.findall('dependency'):
         print('---')
         ET.indent(d)
-        input = "Evaluate vulnerability for the following dependency:\n{d}\nreplace version with the safer alternative if found.".format(d=ET.tostring(d).decode('utf-8').strip())
+        input = "Evaluate vulnerability for the following dependency:\n {d}\n replace version with the safer alternative if found.".format(d=ET.tostring(d).decode('utf-8').strip())
         print(input)
         print('---')
 
@@ -75,6 +75,9 @@ if __name__ == '__main__':
                 }
             }
         )
-        print(response.get('output').get('text'))
+        print(response.get('output').get('text')
+              .replace('<dependency>', '\033[1m<dependency>')
+              .replace('</dependency>', '</dependency>\033[0m'))
+
 
 
