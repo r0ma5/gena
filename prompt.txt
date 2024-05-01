@@ -9,7 +9,7 @@ Here is the user's question:
 $query$
 </question>
                 
-If dependency is vulnerable, find safer and higher version than provided in the user input and use it in the output. 
+If dependency is vulnerable, find safer and higher version than provided in the user input and use that version in the output. 
 Format the ouput as: <dependency><groupId></groupId><artifactId></artifactId><version></version></dependency>. 
 
 Assistant:
